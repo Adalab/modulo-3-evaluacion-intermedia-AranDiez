@@ -56,24 +56,25 @@ function App() {
   return (
     <div className="App">
       <section className="section1">
-        <h1>Frases de friends</h1>
+        <h1>Quotes from friends</h1>
         <form className="form">
-          <label htmlFor="filterText"> Filtrar por frase </label>
+          <label htmlFor="filterText"> Filter by quote </label>
           <input
             type="text"
             name="filterText"
             id="filterText"
-            placeholder="Filtrar"
+            placeholder="Filter"
             onChange={handleSearch}
+            // value={search}
           />
-          <label htmlFor="filterCha"> Filtrar por personaje </label>
+          <label htmlFor="filterCha"> Filter by character </label>
           <select
             name="filterCha"
             id="filterCha"
             onChange={handleSearch}
             value={search}
           >
-            <option>Todos</option>
+            <option>All</option>
             <option>Ross</option>
             <option>Monica</option>
             <option>Joey</option>
@@ -87,29 +88,29 @@ function App() {
         <ul>{htmlData}</ul>
       </section>
       <section className="section3">
-        <h2>Añadir una nueva frase</h2>
+        <h2>Add a new quote</h2>
         <form className="form">
-          <label htmlFor="quote"> Frase </label>
+          <label htmlFor="quote"> Quote: </label>
           <input
             type="name"
             name="quote"
             id="quote"
-            placeholder="Frase"
+            placeholder="Quote"
             onChange={handleNewQuote}
             value={newQuote.name}
           />
-          <label htmlFor="character"> Personaje </label>
+          <label htmlFor="character"> Character: </label>
           <input
             type="name"
             name="character"
             id="character"
-            placeholder="Personaje"
+            placeholder="Character"
             onChange={handleNewQuote}
             value={newQuote.character}
           />
           <input
             type="submit"
-            value="Añadir una nueva frase"
+            value="Add a new quote"
             onClick={handleClick}
             className="input"
           />
