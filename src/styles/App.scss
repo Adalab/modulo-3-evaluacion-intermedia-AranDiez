@@ -1,0 +1,29 @@
+.section1,
+.section2,
+.section3 {
+  font-family: 'Annie Use Your Telescope';
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+body {
+  background-color: rgb(70, 165, 194);
+}
+label {
+  margin: 50px;
+}
+p {
+  text-align: center;
+}
+.form {
+  padding: 10px;
+  border: solid 1px;
+  margin: 10px;
+}
+.li {
+  list-style: none;
+}
+.input:hover {
+  background-color: rgb(4, 38, 48);
+  color: rgb(70, 165, 194);
+}

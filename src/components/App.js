@@ -9,20 +9,6 @@ function App() {
   // 3 - Variable de estado con la lista de quotes
   const [data, setData] = useState(quoteList);
 
-  // map
-  // const htmlData = data.map((quote, i) => (
-  //   <li key={i}>
-  //     <p>
-  //       {quote.quote} {quote.character}
-  //     </p>
-  //   </li>
-  // ));
-  // filter
-  // const htmlData = data.filter(
-  //   (quote) =>
-  //     quote.name.toLowerCase().includes(search.toLowerCase()) ||
-  //     quote.lastname.toLowerCase().includes(search.toLowerCase())
-  // );
   // 5 - Añadir nuevos contactos. Creo variable de estado objeto.
   const [newQuote, setNewQuote] = useState({
     quote: '',
@@ -51,7 +37,7 @@ function App() {
     setSearch(ev.target.value);
   };
   // 4 - creo la constante y hago map de data para que no solo renderice una vez. Hago el map para que me pinte el array (la lista). Hago tambien key para filtrar luego.
-  // 10 - Meto en la variable de estado el valor del input
+  // 10 - Meto en la variable de estado el valor del input y filtro por frase
 
   const htmlData = data
     .filter(
@@ -60,7 +46,7 @@ function App() {
         quote.character.toLowerCase().includes(search.toLowerCase())
     )
     .map((quote, i) => (
-      <li key={i}>
+      <li className="li" key={i}>
         <p>
           {quote.quote} {quote.character}
         </p>
@@ -69,9 +55,9 @@ function App() {
 
   return (
     <div className="App">
-      <section>
+      <section className="section1">
         <h1>Frases de friends</h1>
-        <form>
+        <form className="form">
           <label htmlFor="filterText"> Filtrar por frase </label>
           <input
             type="text"
@@ -79,10 +65,14 @@ function App() {
             id="filterText"
             placeholder="Filtrar"
             onChange={handleSearch}
-            // value={search}
           />
           <label htmlFor="filterCha"> Filtrar por personaje </label>
-          <select name="filterCha" id="filterCha">
+          <select
+            name="filterCha"
+            id="filterCha"
+            onChange={handleSearch}
+            value={search}
+          >
             <option>Todos</option>
             <option>Ross</option>
             <option>Monica</option>
@@ -93,12 +83,12 @@ function App() {
           </select>
         </form>
       </section>
-      <section>
+      <section className="section2">
         <ul>{htmlData}</ul>
       </section>
-      <section>
+      <section className="section3">
         <h2>Añadir una nueva frase</h2>
-        <form>
+        <form className="form">
           <label htmlFor="quote"> Frase </label>
           <input
             type="name"
@@ -121,6 +111,7 @@ function App() {
             type="submit"
             value="Añadir una nueva frase"
             onClick={handleClick}
+            className="input"
           />
         </form>
       </section>
