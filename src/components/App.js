@@ -37,7 +37,7 @@ function App() {
     setSearch(ev.target.value);
   };
   // 4 - creo la constante y hago map de data para que no solo renderice una vez. Hago el map para que me pinte el array (la lista). Hago tambien key para filtrar luego.
-  // 10 - Meto en la variable de estado el valor del input y filtro por frase
+  // 10 - Meto en la variable de estado el valor del input
 
   const htmlData = data
     .filter(
@@ -65,14 +65,15 @@ function App() {
             id="filterText"
             placeholder="Filter"
             onChange={handleSearch}
-            // value={search}
+            value={search}
           />
           <label htmlFor="filterCha"> Filter by character </label>
           <select
             name="filterCha"
             id="filterCha"
-            onChange={handleSearch}
-            value={search}
+            // 11 - faltaría poder filtrar por select
+            // onChange={handleSearch}
+            // value={search}
           >
             <option>All</option>
             <option>Ross</option>
