@@ -1,13 +1,23 @@
 import '../styles/App.scss';
 
-// 1- Despues de hacer un boceto con el html, hago un archivo json para los datos que vendrían de la api y los importo
-import quoteList from '../data/quotes.json';
-// 2 - Importo el hook useState
-import { useState } from 'react';
+// 1- Despues de hacer un boceto con el html, hago un service para fetch y otro para ls y los importo
+import getQuotes from '../services/fetch';
+import ls from '../services/localStorage';
+// 2 - Importo el hook useState y useEffect
+import { useEffect, useState } from 'react';
 
 function App() {
+  // 1b - uso fetch y local storage
+  useEffect(() => {
+    if (data.length === 0) {
+      getQuotes().then((datafromAPI) => {
+        ls.set('quotes', datafromAPI);
+        setData(datafromAPI);
+      });
+    }
+  }, []);
   // 3 - Variable de estado con la lista de quotes
-  const [data, setData] = useState(quoteList);
+  const [data, setData] = useState(ls.get('quotes', []));
 
   // 5 - Añadir nuevos contactos. Creo variable de estado objeto.
   const [newQuote, setNewQuote] = useState({
@@ -30,33 +40,45 @@ function App() {
       character: '',
     });
   };
-  // 8 - Creo una variable de estado que esté pendiente del filtrado
-  const [search, setSearch] = useState('');
+  // 8 - Creo una variable de estado que esté pendiente del filtrado de ambos
+  const [searchQuote, setSearchQuote] = useState('');
+  const [searchCharacter, setSearchCharacter] = useState('all');
   // 9 - Hago un evento que pille lo que se escribe. He puesto un onchange en el input que la llama.
-  const handleSearch = (ev) => {
-    setSearch(ev.target.value);
+  const handleSearchQuote = (ev) => {
+    setSearchQuote(ev.target.value);
+  };
+  const handleSearchCharacter = (ev) => {
+    setSearchCharacter(ev.target.value);
   };
   // 4 - creo la constante y hago map de data para que no solo renderice una vez. Hago el map para que me pinte el array (la lista). Hago tambien key para filtrar luego.
-  // 10 - Meto en la variable de estado el valor del input
+  // 10 - Filtro segun quote y character
 
   const htmlData = data
-    .filter(
-      (quote) =>
-        quote.quote.toLowerCase().includes(search.toLowerCase()) ||
-        quote.character.toLowerCase().includes(search.toLowerCase())
+    .filter((quote) =>
+      quote.quote.toLowerCase().includes(searchQuote.toLowerCase())
     )
+    .filter((quote) => {
+      if (searchCharacter === 'all') {
+        return true;
+      } else if (searchCharacter === quote.character) {
+        return true;
+      } else {
+        return false;
+      }
+    })
+
     .map((quote, i) => (
       <li className="li" key={i}>
-        <p>
-          {quote.quote} {quote.character}
-        </p>
+        {`"${quote.quote}" - ${quote.character}`}
       </li>
     ));
 
   return (
     <div className="App">
-      <section className="section1">
+      <header className="header">
         <h1>Quotes from friends</h1>
+      </header>
+      <section className="section1">
         <form className="form">
           <label htmlFor="filterText"> Filter by quote </label>
           <input
@@ -64,24 +86,23 @@ function App() {
             name="filterText"
             id="filterText"
             placeholder="Filter"
-            onChange={handleSearch}
-            value={search}
+            value={searchQuote}
+            onChange={handleSearchQuote}
           />
           <label htmlFor="filterCha"> Filter by character </label>
           <select
             name="filterCha"
             id="filterCha"
-            // 11 - faltaría poder filtrar por select
-            // onChange={handleSearch}
-            // value={search}
+            value={searchCharacter}
+            onChange={handleSearchCharacter}
           >
-            <option>All</option>
-            <option>Ross</option>
-            <option>Monica</option>
-            <option>Joey</option>
-            <option>Phoebe</option>
-            <option>Chandler</option>
-            <option>Rachel</option>
+            <option value="all">All</option>
+            <option value="Ross">Ross</option>
+            <option value="Monica">Monica</option>
+            <option value="Joey">Joey</option>
+            <option value="Phoebe">Phoebe</option>
+            <option value="Chandler">Chandler</option>
+            <option value="Rachel">Rachel</option>
           </select>
         </form>
       </section>
